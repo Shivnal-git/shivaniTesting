@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Krunal 💖</title>
+
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to top right, #ff758c, #ff7eb3);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .container {
+      z-index: 2;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    p {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 15px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    #yesBtn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #dc3545;
+      color: white;
+      position: absolute;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+
+    /* Mobile optimization */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      button {
+        width: 80%;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+    <h1>Krunal, will you be my Valentine? 💘</h1>
+    <p>– From Shivani 💖</p>
+
+    <button id="yesBtn">YES 💖</button>
+    <button id="noBtn">NO 💔</button>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const music = document.getElementById("music");
+
+    let speed = 300; // NO button speed (gets faster)
+
+    // Play music on first interaction (browser rule)
+    document.body.addEventListener("click", () => {
+      music.play();
+    }, { once: true });
+
+    // Smart NO button
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+
+      speed -= 30;
+      if (speed < 80) speed = 80;
+      noBtn.style.transition = `all ${speed}ms`;
+    });
+
+    // YES button action
+    yesBtn.addEventListener("click", () => {
+      document.body.innerHTML = `
+        <h1 style="color:white;font-size:2.5rem;padding:20px;">
+          🎉 Congratulations Krunal! 🎉<br><br>
+          You are Shivani’s Valentine 💖
+        </h1>
+      `;
+      createConfetti();
+    });
+
+    // Confetti
+    function createConfetti() {
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+        document.body.appendChild(confetti);
+      }
+    }
+
+    // Floating hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 7000);
+    }, 400);
+  </script>
+
+</body>
+</html>
